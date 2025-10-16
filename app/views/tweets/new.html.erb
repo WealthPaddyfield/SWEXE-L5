@@ -1,0 +1,5 @@
+<%= form_with model: @tweet do |f| %>
+    <%= f.label :message, '呟き' %>
+    <%= f.text_field :message%>
+    <%= f.submit 'Tweet'%>
+<% end %>
