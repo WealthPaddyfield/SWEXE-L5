@@ -1,0 +1,11 @@
+<!-- app/views/profiles/show.html.erb -->
+<h1><%= @profile.display_name %></h1>
+<p><%= simple_format(@profile.bio) %></p>
+<% if @profile.avatar_url.present? %>
+  <%= image_tag @profile.avatar_url, alt: @profile.display_name %>
+<% end %>
+<% if @profile.website.present? %>
+  <p>Website: <%= link_to @profile.website, @profile.website, target: "_blank", rel: "noopener" %></p>
+<% end %>
+<%= link_to "編集", edit_profile_path %>
+<%= link_to "戻る", tweets_path %>
