@@ -9,7 +9,8 @@ class UsersController < ApplicationController
   
   def create
     User.create(uid: params[:user][:uid],
-    pass: params[:user][:pass])
+    password: params[:user][:password],
+    password_confirmation: params[:user][:password_confirmation])
     redirect_to root_path
   end
   

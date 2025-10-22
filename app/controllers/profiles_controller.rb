@@ -3,28 +3,21 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def show
-    # current_user のプロフィールを表示
   end
 
   def new
-    if current_user.profile
-      redirect_to profile_path, notice: "既にプロフィールが作成されています。"
-      return
-    end
+    return redirect_to profile_path if current_user.profile
     @profile = current_user.build_profile
   end
 
   def create
-    if current_user.profile
-      redirect_to profile_path, alert: "プロフィールは既に存在します。"
-      return
-    end
+    return redirect_to profile_path if current_user.profile
 
     @profile = current_user.build_profile(profile_params)
     if @profile.save
-      redirect_to profile_path, notice: "プロフィールを作成しました。"
+      redirect_to profile_path
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -33,27 +26,26 @@ class ProfilesController < ApplicationController
 
   def update
     if @profile.update(profile_params)
-      redirect_to profile_path, notice: "プロフィールを更新しました。"
+      redirect_to profile_path
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   def destroy
     @profile.destroy
-    redirect_to root_path, notice: "プロフィールを削除しました。"
+    redirect_to root_path
   end
 
   private
 
   def set_profile
     @profile = current_user.profile
-    unless @profile
-      redirect_to new_profile_path, alert: "プロフィールが見つかりません。新規作成してください。"
-    end
+    return if @profile
+    redirect_to new_profile_path
   end
 
   def profile_params
-    params.require(:profile).permit(:display_name, :bio, :avatar_url, :website)
+    params.require(:profile).permit(:display_name, :bio)
   end
 end

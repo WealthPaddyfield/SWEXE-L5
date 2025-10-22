@@ -7,12 +7,20 @@ class ApplicationController < ActionController::Base
 
   private
 
+=begin
   def current_user
     return @current_user if defined?(@current_user)
     if session[:login_uid].present?
       @current_user = User.find_by(uid: session[:login_uid])
     else
       @current_user = nil
+    end
+  end
+=end
+
+  def current_user
+    if session[:login_uid]
+      User.find_by(uid: session[:login_uid])
     end
   end
 

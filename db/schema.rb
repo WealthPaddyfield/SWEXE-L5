@@ -22,8 +22,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_071239) do
     t.integer "user_id", null: false
     t.string "display_name"
     t.text "bio"
-    t.string "avatar_url"
-    t.string "website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
@@ -38,11 +36,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_071239) do
 
   create_table "users", force: :cascade do |t|
     t.string "uid"
-    t.string "pass"
-    t.integer "age"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_foreign_key "profiles", "users"
 end
